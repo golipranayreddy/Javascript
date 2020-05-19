@@ -1,15 +1,15 @@
 import * as React from 'react';
-import { View, Text, Button, StyleSheet, FlatList } from 'react-native';
+import { View, Text, Button, StyleSheet, ScrollView } from 'react-native';
 import {Constants} from 'expo';
 import Task from './components/Task';
 import Form from './components/Form';
-import Header from './components/Header';
+import {Header} from './components/Form';
+
 
 
 
 export default function App() {
   const [taskList, setTaskList] = React.useState([]);
-  const [taskText, setTaskText] = React.useState();
 
   const deleteTask = (key) => {
     setTaskList((prevTasks) => {
@@ -20,7 +20,7 @@ export default function App() {
 
   const addTask = (text) => {
     if (text === "") return;
-    let currentTask = { title: text, key: Date.now().toString() };
+    let currentTask = { title: text, key: Date.now().toString() , addedDate : new Date().toLocaleDateString() };
     setTaskList((prevTasks) => {
       return [
         currentTask,
@@ -34,15 +34,14 @@ export default function App() {
     <View style={styles.container}>
       <Header />
       <View style={styles.content}>
-        <Form updateTask={addTask}/>
+        <Form newTask={addTask}/>
         <View style={styles.list}>
-          <FlatList 
-            data={taskList}
-            renderItem={({ item }) => (
-              <Task task={item} removeTask={deleteTask} key={item.key}/>
-            )}
-            keyExtractor={(item, index) => index.toString()}
-          />
+        <ScrollView>
+        {taskList.map((each) => {
+          return <Task task={each} removeTask={deleteTask} key={each.key}/>
+        })}
+          
+        </ScrollView>
         </View>
       </View>
     </View>
@@ -53,7 +52,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fafafa'
+    backgroundColor: '#c9c5c5'
   },
   content: {
     padding: 35

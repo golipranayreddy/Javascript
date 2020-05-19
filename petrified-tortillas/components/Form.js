@@ -11,17 +11,39 @@ export default function Form(props) {
             placeholder='Please enter your task' 
             onChangeText={(text) => setInput(text)} 
             defaultValue={input}/>
-            <Button title="Add task" onPress={() => props.updateTask(input)}/>
+            <Button style={styles.Button} title="Add task" onPress={() => props.newTask(input)}/>
+        </View>
+    );
+}
+
+export function Header() {
+    return (
+        <View style={styles.header}>
+            <Text style={styles.title}>To-Do Appliation (React Native)</Text>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
+    Button: {
+        borderBottomColor: '#ddd'
+    },
     input: {
         marginBottom: 10,
         paddingVertical: 6,
         paddingHorizontal: 8,
         borderBottomWidth: 1,
         borderBottomColor: '#ddd'
+    },
+
+    header: {
+      height: 80,
+      paddingTop: 20,
+      backgroundColor: '#4e4f57'
+    },
+    title: {
+        fontSize: 20,
+        textAlign: 'center',
+        fontWeight: 'bold'
     }
 })
